@@ -1,0 +1,20 @@
+doctype html
+html
+  include /../../static/assets/lib/ldui/pug/ldui.pug
+  head
+    +css("https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css")
+    +css("assets/lib/ldui/ldui.min.css")
+    style(type="text/css"): :stylus
+      html, body { width: 100%; height: 100%; margin: 0; padding: 0; }
+      *[ld=edit] > div { width: 100%; height: 100% }
+
+  body: .p-4.w-100.h-100
+    include library.pug
+    .d-flex.h-100.h-100
+      .w-100.h-100.border(ld="edit")
+      .w-100.h-100.border(ld="view")
+    +script("assets/lib/ldui/ldui.min.js")
+    +script("js/transpiler.js")
+    +script("js/editlet.js")
+    +script("js/editor.js")
+    +script("js/index.js")
