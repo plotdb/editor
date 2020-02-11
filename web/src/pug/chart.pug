@@ -1,0 +1,12 @@
+extends /base.pug
+block body
+  .d-flex.h-100.h-100.flex-column
+    .w-100.mb-2
+      .btn.btn-outline-dark HTML
+      .btn.btn-outline-dark CSS
+      .btn.btn-outline-dark JS
+    .flex-grow-1.d-flex.w-100
+      .w-100.h-100.border.mr-2(ld="edit")
+      .w-100.h-100.border.ml-2(ld="view")
+block script
+  +script("js/chart.js")
