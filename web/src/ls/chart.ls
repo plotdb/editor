@@ -11,8 +11,8 @@
       fs.write-file-sync 'index.js', lc.chart.code.content
       ed = new Editor do
         node: do
-          edit: '[ld=edit]'
-          view: '[ld=view]'
+          edit: '[ld=editor]'
+          view: '[ld=viewer]'
         editlet: {}
         renderer: ({fs}) ->
           if !fs => return
@@ -57,4 +57,10 @@
           return code
       ed.set-files fs
       ed.open \index.js
+      view = new ldView do
+        root: document.body
+        action: click: do
+          edit: ({node}) ->
+            name = node.getAttribute(\data-name)
+            ed.open "index.#{name}"
 )!

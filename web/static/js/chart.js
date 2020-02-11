@@ -11,14 +11,14 @@
     console.log(it);
     return getfa('chart');
   }).then(function(fs){
-    var ed;
+    var ed, view;
     fs.writeFileSync('index.html', lc.chart.doc.content);
     fs.writeFileSync('index.css', lc.chart.style.content);
     fs.writeFileSync('index.js', lc.chart.code.content);
     ed = new Editor({
       node: {
-        edit: '[ld=edit]',
-        view: '[ld=view]'
+        edit: '[ld=editor]',
+        view: '[ld=viewer]'
       },
       editlet: {},
       renderer: function(arg$){
@@ -59,7 +59,20 @@
       }
     });
     ed.setFiles(fs);
-    return ed.open('index.js');
+    ed.open('index.js');
+    return view = new ldView({
+      root: document.body,
+      action: {
+        click: {
+          edit: function(arg$){
+            var node, name;
+            node = arg$.node;
+            name = node.getAttribute('data-name');
+            return ed.open("index." + name);
+          }
+        }
+      }
+    });
   });
 })();
 function import$(obj, src){

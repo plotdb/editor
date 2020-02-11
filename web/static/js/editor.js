@@ -6,7 +6,11 @@
     opt == null && (opt = {});
     this.opt = opt;
     this.fs = {
-      openedFile: null
+      openedFile: null,
+      content: {
+        old: '',
+        cur: ''
+      }
     };
     this.ed = {};
     this.el = el = (ref1$ = {}, ref1$.edit = (ref$ = opt.node).edit, ref1$.view = ref$.view, ref1$);
@@ -34,7 +38,11 @@
         opt: ((ref$ = this.opt).editlet || (ref$.editlet = {}))[name] || {}
       });
       return this.ed[name].on('change', function(){
-        return this$.update();
+        this$.fs.content.cur = this$.ed[name].get();
+        if (this$.fs.content.old !== this$.fs.content.cur) {
+          this$.update();
+        }
+        return this$.fs.content.old = this$.fs.content.cur;
       });
     },
     sync: function(){
@@ -45,7 +53,7 @@
       return this.render();
     },
     open: function(it){
-      var content, e;
+      var content, e, ref$;
       try {
         content = this.fs.fs.readFileSync(it).toString();
       } catch (e$) {
@@ -54,8 +62,10 @@
         return;
       }
       this.fs.openedFile = it;
-      this.ed.cm.set(content);
-      return this.render();
+      ref$ = this.fs.content;
+      ref$.cur = content;
+      ref$.old = content;
+      return this.ed.cm.set(content);
     },
     render: debounce(function(){
       var payload;
@@ -86,7 +96,8 @@
         }
         return results$;
       };
-      return _('.');
+      _('.');
+      return this.render();
     }
   });
   if (typeof window != 'undefined' && window !== null) {

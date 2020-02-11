@@ -637,7 +637,7 @@ pug_mixins["css"]("assets/lib/ldui/ldui.min.css");
 ;pug_debug_line = 8;pug_debug_filename = "src\u002Fpug\u002Fbase.pug";
 pug_html = pug_html + "\u003Cstyle type=\"text\u002Fcss\"\u003E";
 ;pug_debug_line = 8;pug_debug_filename = "src\u002Fpug\u002Fbase.pug";
-pug_html = pug_html + "html,\nbody {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n}\n*[ld=edit] \u003E div {\n  width: 100%;\n  height: 100%;\n}\n\u003C\u002Fstyle\u003E";
+pug_html = pug_html + "html,\nbody {\n  width: 100%;\n  height: 100%;\n  margin: 0;\n  padding: 0;\n}\n*[ld=editor] \u003E div {\n  width: 100%;\n  height: 100%;\n}\n\u003C\u002Fstyle\u003E";
 ;pug_debug_line = 11;pug_debug_filename = "src\u002Fpug\u002Fbase.pug";
 pug_html = pug_html + "\u003C\u002Fhead\u003E";
 ;pug_debug_line = 12;pug_debug_filename = "src\u002Fpug\u002Fbase.pug";

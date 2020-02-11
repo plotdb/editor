@@ -3,7 +3,7 @@
     @opt = opt
 
     # File System
-    @fs = { opened-file: null }
+    @fs = { opened-file: null, content: {old: '', cur: ''} }
 
     # Editlets
     @ed = {}
@@ -27,7 +27,10 @@
       root = ld$.create(name: 'div')
       @el.edit.appendChild root
       @ed[name] = new editlet[name] {root, opt: (@opt.{}editlet[name] or {})}
-      @ed[name].on \change, ~> @update!
+      @ed[name].on \change, ~>
+        @fs.content.cur = @ed[name].get!
+        if @fs.content.old != @fs.content.cur => @update!
+        @fs.content.old = @fs.content.cur
 
     sync: ->
       # TODO - integrate changes from remote
@@ -45,8 +48,8 @@
         console.log "file not found: ", e
         return
       @fs.opened-file = it
+      @fs.content <<< {cur: content, old: content}
       @ed.cm.set content
-      @render!
 
     render: debounce ->
       payload = @opt.renderer @fs
@@ -59,6 +62,7 @@
         files = fs.readdir-sync f .map -> "#f/#it"
         for file in files => if fs.stat-sync file .is-directory! => _(file) else list.push file
       _ '.'
+      @render!
 
   if window? => window.Editor = Editor
   if module? => module.exports = Editor
