@@ -65,6 +65,12 @@
           v == null && (v = '');
           return stylus.render(v);
         }
+      },
+      xml: {
+        test: function(v){
+          v == null && (v = '');
+          return v.startsWith('<?xml');
+        }
       }
     }
   };

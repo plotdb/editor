@@ -1,0 +1,14 @@
+編輯器
+預覽 ( sandbox )
+
+特定內容編輯器
+ - codemirror
+ - json editing?
+ - svg editing?
+ - visual editing?
+ - graph / tree structure editing? 
+ - config editing?
+
+ * 副檔名 -> type. 若無副檔名: 自動偵測
+
+

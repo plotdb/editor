@@ -20,19 +20,23 @@ editlet.prototype = import$(Object.create(Object.prototype), {
     }
     return results$;
   },
-  set: function(){},
+  set: function(arg$){
+    var content, type, name;
+    content = arg$.content, type = arg$.type, name = arg$.name;
+  },
   get: function(){},
   config: function(){}
 });
 editlet.cm = function(opt){
-  var cm, bbox, this$ = this;
+  var cm, bbox, modes, this$ = this;
   opt == null && (opt = {});
+  this.lc = {};
   this.opt = opt;
   this.root = typeof opt.root === 'string'
     ? document.querySelector(opt.root)
     : opt.root;
   this.cm = cm = CodeMirror(this.root, import$({
-    mode: 'javascript',
+    mode: 'htmlmixed',
     lineNumbers: true,
     theme: 'ayu-mirage',
     lineWrapping: true,
@@ -42,15 +46,37 @@ editlet.cm = function(opt){
   }, opt.cm || {}));
   bbox = this.root.getBoundingClientRect();
   cm.setSize(bbox.width, bbox.height);
-  cm.setValue('123');
+  cm.setValue('');
+  modes = {
+    html: 'htmlmixed',
+    styl: 'stylus',
+    js: 'javascript'
+  };
+  cm.on('change', debounce(function(){
+    var ret;
+    if (!this$.lc.type) {
+      ret = transpiler.detect(cm.getValue());
+      if (ret.name) {
+        return cm.setOption('mode', modes[ret.name] || ret.name);
+      }
+    }
+  }));
   cm.on('change', function(){
     return this$.fire('change');
   });
   return this;
 };
 editlet.cm.prototype = import$(Object.create(editlet.prototype), {
-  set: function(it){
-    return this.cm.setValue(it);
+  set: function(arg$){
+    var content, type, name;
+    content = arg$.content, type = arg$.type, name = arg$.name;
+    this.cm.setValue(content);
+    if (type != null) {
+      this.lc.type = type;
+    }
+    if (name != null) {
+      return this.lc.name = name;
+    }
   },
   get: function(){
     return this.cm.getValue();

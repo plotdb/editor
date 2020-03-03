@@ -52,20 +52,25 @@
       this.fs.fs.writeFileSync(this.fs.openedFile, this.ed.cm.get());
       return this.render();
     },
-    open: function(it){
-      var content, e, ref$;
+    open: function(name){
+      var content, e, ref$, type, that;
       try {
-        content = this.fs.fs.readFileSync(it).toString();
+        content = this.fs.fs.readFileSync(name).toString();
       } catch (e$) {
         e = e$;
         console.log("file not found: ", e);
         return;
       }
-      this.fs.openedFile = it;
+      this.fs.openedFile = name;
       ref$ = this.fs.content;
       ref$.cur = content;
       ref$.old = content;
-      return this.ed.cm.set(content);
+      type = (that = /\.([a-zA-Z]+)$/.exec(name)) ? that[1] : null;
+      return this.ed.cm.set({
+        content: content,
+        name: name,
+        type: type
+      });
     },
     render: debounce(function(){
       var payload;

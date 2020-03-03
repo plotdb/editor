@@ -2,11 +2,11 @@
 (function(){
   return getfa('sample').then(function(fs){
     var ed;
-    fs.writeFileSync('index.html', 'hello index.html!');
+    fs.writeFileSync('blank', 'hello index.html!');
     ed = new Editor({
       node: {
-        edit: '[ld=edit]',
-        view: '[ld=view]'
+        edit: '[ld=editor]',
+        view: '[ld=viewer]'
       },
       editlet: {},
       renderer: function(arg$){
@@ -16,20 +16,19 @@
           return;
         }
         payload = {
-          html: fs.readFileSync('index.html').toString()
+          html: fs.readFileSync('blank').toString()
         };
         for (k in payload) {
           v = payload[k];
           ret = transpiler.detect(v);
-          if (ret.mod) {
+          if (ret.mod && ret.mod.transform) {
             payload[k] = ret.mod.transform(v);
           }
         }
-        console.log(payload);
         return payload;
       }
     });
     ed.setFiles(fs);
-    return ed.open('index.html');
+    return ed.open('blank');
   });
 })();

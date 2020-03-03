@@ -41,15 +41,16 @@
       @fs.fs.write-file-sync @fs.opened-file, @ed.cm.get!
       @render!
 
-    open: ->
+    open: (name) ->
       try
-        content = (@fs.fs.read-file-sync it .toString!)
+        content = (@fs.fs.read-file-sync name .toString!)
       catch e
         console.log "file not found: ", e
         return
-      @fs.opened-file = it
+      @fs.opened-file = name
       @fs.content <<< {cur: content, old: content}
-      @ed.cm.set content
+      type = if /\.([a-zA-Z]+)$/.exec(name) => that.1 else null
+      @ed.cm.set {content, name, type}
 
     render: debounce ->
       payload = @opt.renderer @fs

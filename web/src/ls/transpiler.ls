@@ -22,6 +22,8 @@
         destype: \css
         test: (v = '') -> stylus? and v.startsWith '//- stylus'
         transform: (v = '') -> stylus.render v
+      xml: do
+        test: (v = '') -> v.startsWith '<?xml'
 
   if window? => window.transpiler = transpiler
   if module? => module.exports = transpiler

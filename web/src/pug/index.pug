@@ -1,7 +1,11 @@
 extends /base.pug
+block head
+  +css("/css/index.css")
+  link(href="https://fonts.googleapis.com/css?family=Inconsolata&display=swap",rel="stylesheet")
+
 block body
   .d-flex.h-100.h-100
-    .w-100.h-100.border(ld="editor")
-    .w-100.h-100.border(ld="viewer")
+    .w-100.h-100.p-4: .border.w-100.h-100.rounded-lg.shadow.overflow-hidden(ld="editor")
+    .w-100.h-100.p-4: .border.w-100.h-100.rounded-lg.shadow.overflow-hidden(ld="viewer")
 block script
   +script("js/index.js")
