@@ -1,9 +1,12 @@
 {
   "author": "zbryikt",
-  "name": "editr",
+  "name": "editor",
   "license": "MIT",
   "description": "Editor Base Module",
   "version": "0.0.1",
+  "files": [
+    "dist/**/*"
+  ],
   "homepage": "https://github.com/plotdb/editor",
   "repository": {
     "type": "git",
