@@ -4,5 +4,5 @@
 }
 /* this is for a super-long-no-space line, such as long URL */
 .CodeMirror-wrap pre.CodeMirror-line {
-  word-break: break-all;
+  word-break: break-all !important;
 }
